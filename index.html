@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+
+<title>Delta Plotware - Ternary diagram plotting software</title>
+<link rel="icon" type="image/png" href="imgs/favicon.png"/>
+
+<meta name="title" content="Delta Plotware" />
+<meta name="description" content="Software for Triangular or Ternary plots" />
+<meta name="keywords" content="Ternary plot, triangular plot, Thernary phase plot, Delta, Delta Plotware, DeltaPlotware, Software, Windows Software, Highschool software, University software, Scientific software, Three phase, Three, Ternary, Triangular, Plot, Graph, Chemix, Chemix school" />
+<meta name="author" content="Delta Plotware" />
+<meta name="owner" content="Delta Plotware" />
+<meta name="copyright" content="(c) 2018" />
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<head>
+<style>
+
+/* =================================================== *\
+GENERAL LAYOUT
+\* =================================================== */
+
+body, html{
+	height: 100%;
+	width: 100%;
+	background-image: radial-gradient(circle at center,#226f93, #08358e);
+	background-size: cover;
+	margin: 0;
+	font-family: "Trebuchet MS";
+
+}
+
+p{
+	text-align: justify;
+}
+
+h4{ font-weight: bold;}
+
+.main-div{
+	margin-top: 40px;
+	margin-left: 10px;
+	margin-right: 10px;
+	//position: absolute;
+	//width: 100%;
+	max-width: 645px;
+	
+	text-align: left;
+	display: inline-block;
+	//height: 500px;
+	//margin-top: -250px;
+}
+
+.top-div{
+	height: 100%;
+	overflow: hidden;
+}
+.top-left-div{
+	width: 89px;
+	height: 100%; 
+	float: left; 
+}
+
+.top-right-div{
+	height: 100%;
+	margin-left: 80px;
+	padding-left: 20px;
+}
+
+.bottom-div{
+	height: 100%;
+	overflow: hidden;
+	color: white;
+	margin-top: 15px;
+}
+
+.statusbar-div{
+    height: 30px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    bottom: 0;
+    padding-left: 10px;
+    right: 0;
+    text-align: left;
+    overflow: hidden;
+    color: white;
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.top-button{
+	background-color: rgba(0,0,0,0.3);
+	width: 98px;
+	line-height: 30px;
+	border-radius: 15px;
+	
+	text-align: center;
+	cursor: pointer;
+
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 3px;
+	margin-top: 3px;
+	
+}
+
+.top-button:hover{
+	background-color: rgba(0,0,0,0.6);
+}
+
+input[type=text] {text-align: center; margin-bottom: 10px;}
+
+input[type=text]{
+padding: 12px 20px;
+box-sizing: border-box;
+border-radius: 4px;
+border: 1px solid #ccc;
+font-family: "Arial";
+}
+
+
+
+.paypal-button-container{
+	width: 250px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.paypal-button{
+	margin-top: 5px; 
+	margin-left:auto; 
+	margin-right:auto;
+	
+}
+
+.paypal-button input[type=text]{
+	width: 250px;
+	height: 40px;
+	font-size: 14px;
+}
+
+.paypal-button input[type=image]{
+	padding-left: 15px;
+}
+
+.gross-button{
+	width: 100px;
+	height: 40px;
+	padding: 10px 20px;
+	margin-top: 4px;
+	border-radius: 3px;
+	line-height: 20px;
+	cursor: pointer;
+	text-align: center;
+	background-color: #002b72;
+	border: 1px solid #001538;
+}
+
+
+@media only screen and (max-width: 665px) {
+	.main-div{margin-top: 10px;}
+	.top-left-div{ display: none; }
+	.top-right-div{ margin-left: 0; padding-left: 0; }
+	.top-button{ width: 98%; }
+	.hide-immage {display: none;}
+}
+
+.mySlides {display:none}
+.w3-left, .w3-right, .w3-badge {cursor:pointer}
+.w3-badge {height:13px;width:13px;padding:0}
+
+/* =================================================== *\
+MODAL BOX
+\* =================================================== */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  border-radius: 8px;
+  border-width: 0;
+  margin: auto;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+  width: 80%;
+  max-width:600px
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+</style>
+</head>
+<body onload="onLoad()">
+	<div style="height:100%; text-align: center;">
+		<div class="main-div">
+			<div class="top-div">
+				<div class="top-left-div">
+					<img class="" src="imgs/img_logo.png" style="height: 100%; width: 100%">
+				</div>
+
+				<div class="top-right-div">
+					<div class="top-button" id="button-1" onclick="button1_Click()"><a>Home</a></div>
+					<div class="top-button" id="button-2" onclick="button2_Click()"><a>Download</a></div>
+					<div class="top-button" id="button-3" onclick="button3_Click()"><a>Pricing</a></div>
+					<div class="top-button" id="button-4" onclick="button4_Click()"><a>FAQs</a></div>
+					<div class="top-button" id="button-5" onclick="button5_Click()"><a>About us</a></div>
+				</div>
+
+			</div>
+			<div class="bottom-div">	
+				
+				<!-- 1) FEATURES DIV -->
+				<div id="div-1" style="display:none">
+					<p>
+						Delta Plotware is a very easy to use ternary diagram editor for Windows. It allows you to easily create, edit, customize and export (as PNG and SVG!) ternary diagrams. Check it out!
+					</p>
+					<div class="w3-content w3-display-container" style="max-width:800px">
+					<img class="mySlides" src="imgs/img1.png" style="border-radius: 8px; width:100%;">
+					<img class="mySlides" src="imgs/img2.png" style="border-radius: 8px; width:100%;">
+					<img class="mySlides" src="imgs/img3.png" style="border-radius: 8px; width:100%;">
+					<img class="mySlides" src="imgs/img4.png" style="border-radius: 8px; width:100%;">
+					<img class="mySlides" src="imgs/img5.png" style="border-radius: 8px; width:100%;">
+					<img class="mySlides" src="imgs/img6.png" style="border-radius: 8px; width:100%;">
+					<img class="mySlides" src="imgs/img7.png" style="border-radius: 8px; width:100%;">
+					<img class="mySlides" src="imgs/img8.png" style="border-radius: 8px; width:100%;">
+					<div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(4)"></span>
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(5)"></span>
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(6)"></span>
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(7)"></span>
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(8)"></span>
+					</div>
+					</div>
+					<p style="margin-bottom: 50px;"></p>
+				</div>
+
+				<!-- 2) DOWNLOAD DIV -->
+				<div id="div-2" style="display:none">
+					<p>
+						Download the full version of Delta Plotware! Downloading is absolutely free, but you have to buy the license to eliminate the watermark from the diagrams.
+
+						</br></br>Please select one of the options below to download Delta Plotware v1.5:
+					</p>
+					<div style="margin-right: auto; margin-left: auto; width: 100%; text-align: center;">
+						<div class="gross-button" onclick="window.location='/setup.exe'" style="width: 60%; display: inline-block;"><a>Windows 32bit and 64bit</a></div>
+					</div>
+					<p>
+						Thanks for downloading Delta Plotware! We hope you like the product and proceed to buy the license soon. If you want to leave us any comments, be them positive or negative, please go to the "About us" section. We love getting feedback!
+					</p>
+					<p style="margin-bottom: 50px;"></p>
+				</div>
+
+				<!-- 3) BUY license DIV -->
+				<div id="div-3" style="display:none">
+					<p>
+						Buying a license is very easy: just proceed with the PayPal checkout and you will recieve an email with the activation code within the next 24 hours. 
+
+						<br><br>We offer two deals. An individual license, that can be used only once, and an unlimited license, ideal for a large group.
+					</p>
+					<div style="width: 100%; text-align: center; margin-top: 40px;">
+						<div class="paypal-button-container">
+							<div>
+								<a>Individual license<br></a><a style="font-size: 40px;">$9</a><sup style="font-size: 25px; text-decoration: underline;">95</sup>
+							</div>
+							<!-- PAYPAL BUTTON -->
+							<div class="paypal-button">
+								
+								<!-- INDIVIDUAL LICENSE PAYPAL BUTTON -->
+								<!-- ================================ -->
+								<!--<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+								<input type="hidden" name="cmd" value="_s-xclick">
+								<input type="hidden" name="hosted_button_id" value="4TYR7LTB7XQHW">
+								<table>
+								<tr><td><input type="hidden" name="on0" value="Email">Email</td></tr><tr><td><input type="text" name="os0" maxlength="200"></td></tr>
+								</table>
+								<input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+								<img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+								</form>-->
+
+		                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+								<input type="hidden" name="cmd" value="_s-xclick">
+								<input type="hidden" name="hosted_button_id" value="BUF2LJPHYDZHY">
+								<table>
+								<tr><td><input type="hidden" name="on0" value="Email">Email</td></tr><tr><td><input type="text" name="os0" maxlength="200"></td></tr>
+								</table>
+								<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+								<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+								</form>
+
+							</div>
+						</div>
+						<div class="paypal-button-container">
+							<div>
+								<a>Unlimited license<br></a><a style="font-size: 40px;">$199</a><sup style="font-size: 25px; text-decoration: underline;">95</sup>
+							</div>
+							<!-- PAYPAL BUTTON -->
+							<div class="paypal-button">
+								
+								<!-- UNLIMITED LICENSE PAYPAL BUTTON -->
+								<!-- =============================== -->
+								<!--<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+								<input type="hidden" name="cmd" value="_s-xclick">
+								<input type="hidden" name="hosted_button_id" value="LN25P5VZHDFRE">
+								<table>
+								<tr><td><input style="" type="hidden" name="on0" value="Email">Email</td></tr><tr><td><input type="text" name="os0" maxlength="200"></td></tr>
+								</table>
+								<input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+								<img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+								</form>-->
+
+								<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+								<input type="hidden" name="cmd" value="_s-xclick">
+								<input type="hidden" name="hosted_button_id" value="D9MDWF9FUMU28">
+								<table>
+								<tr><td><input type="hidden" name="on0" value="Email">Email</td></tr><tr><td><input type="text" name="os0" maxlength="200"></td></tr>
+								</table>
+								<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+								<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+								</form>
+
+							</div>
+						</div>
+					</div>
+					<p>
+						All prices are in US dollars. <br><br>
+
+						To use the license, download Delta Plotware from the Download page and within the program click on the "Get license" button on the taskbar. Introduce the code, restart the program and voila!
+
+						Don't worry, we offer a <b>full refund up to 30 days</b> after the purchase if you are not happy with it!
+					</p>
+					<p style="margin-bottom: 50px;"></p>
+				</div>
+
+				<!-- 4) CONTACT DIV -->
+				<div id="div-4" style="display:none">
+					<h2>Frequently Asked Questions</h2>
+					<h4>How do I learn to use Delta Plotware?</h4>
+					<p>The best way to learn is using it. Delta Plotware is designed to be very easy to use, so you'll figure it out intuitively. If you still feel you would like some instructions, <a href="QuickStartGuide.pdf">here is a very short PDF</a> describing the basic capabilities.</p>
+					<h4>How long does my license last?</h4>
+					<p>It never expires!</p>
+					<h4>Can I use my license more than once?</h4>
+					<p>Indivudual licenses can be used only once. We also offer an unlimited license that can be used infinite times.</p>
+					<h4>And what happens with my license when a new version is out?</h4>
+					<p>All updates of the current version don't require you to purchase a new license. However, new versions of the software, with major upgrades and new functionalities with respect to the previous versions, will require a new license.</p>
+					<h4>Is there technical support available?</h4>
+					<p>Yes, you can send a mail to <a href="mailto:admin@deltaplotware.com">admin@deltaplotware.com</a>, we will try to respond as quick as possible.</p>
+					<h4>How can I export my graphs?</h4>
+					<p>You can export your graphs as PNG or SVG. You can choose the size of the image so that it fits perfectly in your document.</p>
+					<h4>What do "A4 full width" and "A4 half width" on the exporting size menu mean?</h4>
+					<p>Microsoft Word, Libre Office, Google Docs and other text editors usually use a default image resolution of 96ppi (pixels per inch). An A4 page has 8.27 inches wide, so leaving 2 inches for left and right margins, this gives 6.27 inches or approximately 602 pixels wide. This is the "A4 full width" exporting size, with a height chosen to give a nice aspect ratio for an image in a document. The "A4 half width" is a little bit less than 602/2 pixels, so as to leave a small gap in case you want to include two images side by side.</p>
+					<h4>But how do I use a SVG file?</h4>
+					<p>SVG files are the most standard format for vector graphics. A SVG file, as opposed to PNG files, lets you "zoom in" the image infinitely without "loosing resolution". To see and edit SVG files you can use the open source program InkScape. Here is an example (try zooming in):</p>
+					<img src="imgs/example.svg" width="100%" style="border-radius: 8px;">
+					<p>But what are they good for? If you use LaTex and are a perfectionist when it comes to writing documents, you might already know. When you open a PDF and see an image that looks perfect, regardless of how much zoom-in, you can tell it is a vector image.<br><br>So how do you place a SVG in LaTex, you might ask? The option is not available by default. You have to include the package
+					<a style="font-family: Consolas">\usepackage{svg}</a>
+					<a> and then include an image with the command </a>	
+					<a style="font-family: Consolas">\includesvg{path/figure.svg}</a>
+					<a>and that's it!</a></p>
+					<h4>My graphs always have a white background, can't I have a transparent background?</h4>
+					<p>We include a white background to avoid some undesired results when you plot areas and lines, which can land outside the plotting area. There is a workaround though, you can save your graph as SVG and remove the background with InkScape.</p>
+					<p style="margin-bottom: 50px;"></p>
+				</div>
+
+				<!-- 5) CONTACT DIV -->
+				<div id="div-5" style="display:none">
+					<h4>The Creator</h4>
+					<table>
+						<tr>
+							<td><img class="hide-immage" width="165px" style="margin-right: 5px;" src="imgs/profile_pic.png"></td>
+							<td><p>Hi there! My name is C. Kova and I studied chemical and mechanical engineering. We engineers use a lot of graphics to represent data, and almost every task or assignment involves creating some sort of plot. As there are not many programs that allow you to create ternary diagrams easily, I created Delta Plotware to help teachers, students, and other people in academia create this type of diagrams and efortlessly include them in a presentation, a report, a textbook, etc.</p></td>
+						</tr>
+					</table>
+
+					<h4>Send us a message</h4>
+						<p>The Delta Plotware team is constantly trying to bring the best product so that you can do a great work and maximize your productivity. To achieve that we realize feedback is really important, as it is the best way to improve our product and give you a better experience!</p>
+
+						<p>Send us a message at <a href="">admin@deltaplotware.com</a> for any inquires, suggestions or anything else.</p>
+					
+					
+
+					<h4>Support</h4>
+						<p>If you need help with anything, you can send us an email to <a href="">admin@deltaplotware.com</a> with the subject SUPPORT. We'll try to answer as soon as possible.</p>
+					<p style="margin-bottom: 50px;"></p>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- BOTTOM STATUS BAR -->
+        <div class="statusbar-div">
+            <div style="width:645px; height:30px; margin: auto; padding-top: 3px;" >
+                <!--<a href="https://www.facebook.com/Delta-Plotware-725374497817986/"><img src="imgs/ico-facebook.png" style="height:24px; width:24px;"></a>-->
+                <a href="mailto:deltaplotware@gmail.com"><img src="imgs/ico-email.png" style="height:24px; width:24px;"></a>
+                <a href="https://www.youtube.com/channel/UC9o22aNwnhpmBHUrOVo00sg"><img src="imgs/ico-youtube.png" style="height:24px; width:24px;"></a>
+			    <a><img onclick="openModal()" src="imgs/ico-rss.png" style="height:24px; width:24px;cursor: pointer;"></a>
+			    <a style="padding-left:10px;">Delta Plotware (2019) - All rights reserved</a>
+            </div>
+           
+		</div>
+	</div>
+
+	<div id="myModal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class=" modal-content w3-animate-opacity">
+	    <!--<span onclick="closeModal()" class="close">&times;</span>-->
+	    <p>Subscribe to our newsletter, get info, offers, discounts and be the first to learn about new Delta Plotware releases!</p>
+	    <input id="email_textbox2" type="text" name="Text_mail" placeholder="Email address" cols="40" rows="1" style="height:45px; width: 100%; resize:none;">
+	    <div style=" margin-top: 10px; margin-bottom: 10px;"><span id="subscribe_button" class="gross-button" style="color:white;" onclick="subscribe()"><a>Subscribe</a></span>
+	    <span id="thanks_for_subscribing" style="display: none">Thanks for subscribing!</span></div>
+	  </div>
+
+	</div>
+
+</body>
+
+<script>
+
+function onLoad(){
+	currentDiv(1);
+	button1_Click();
+	//setTimeout(openModal, 5000);
+}
+
+/* =================================================== *\
+MAIN BOX
+\* =================================================== */
+function button1_Click() {
+	hide_all();
+	document.getElementById("div-1").style.display = "block";
+	document.getElementById("button-1").style.color = "white";
+}
+
+function button2_Click() {
+	hide_all();
+	document.getElementById("div-2").style.display = "block";
+	document.getElementById("button-2").style.color = "white";
+}
+
+function button3_Click() {
+	hide_all();
+	document.getElementById("div-3").style.display = "block";
+	document.getElementById("button-3").style.color = "white";
+}
+
+function button4_Click() {
+	hide_all();
+	document.getElementById("div-4").style.display = "block";
+	document.getElementById("button-4").style.color = "white";
+}
+
+function button5_Click() {
+	hide_all();
+	document.getElementById("div-5").style.display = "block";
+	document.getElementById("button-5").style.color = "white";
+}
+
+function hide_all(){
+	document.getElementById("button-1").style.color = "black";
+	document.getElementById("button-2").style.color = "black";
+	document.getElementById("button-3").style.color = "black";
+	document.getElementById("button-4").style.color = "black";
+	document.getElementById("button-5").style.color = "black";
+	document.getElementById("div-1").style.display = "none";
+	document.getElementById("div-2").style.display = "none";
+	document.getElementById("div-3").style.display = "none";
+	document.getElementById("div-4").style.display = "none";
+	document.getElementById("div-5").style.display = "none";
+}
+
+/* =================================================== *\
+MODAL BOX / SUBSCRIBE
+\* =================================================== */
+
+var modal = document.getElementById('myModal');
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+function openModal() {
+    modal.style.display = "block";
+}
+
+function closeModal() {
+	modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+	if (event.target == modal) {
+  		modal.style.display = "none";
+	}
+}
+
+function subscribe(){
+    var mailAddress = document.getElementById("email_textbox2").value;
+    //add_subscription(mailAddress);
+    document.getElementById("thanks_for_subscribing").style.display = "inline-block";
+    document.getElementById("subscribe_button").style.display = "none";
+
+    setTimeout(function(){
+		closeModal();
+	}, 2000);
+    
+}
+
+function add_subscription(mailAddress){
+    if(mailAddress !== ""){
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            }
+        }
+        var q = "php/add_subscription.php?email=" + mailAddress;
+        xmlhttp.open("GET",q,false);
+        xmlhttp.send();
+    };
+}
+
+function click_count(){
+    var xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {}
+    }
+    xmlhttp.open("GET","php/click_count.php",false);
+    xmlhttp.send();
+    SendAutoEmail("one click!");
+}
+
+/* =================================================== *\
+EMAILER
+\* =================================================== */
+function SendClick() {
+    var body = document.getElementById("emailBody").value;
+    SendAutoEmail(body);
+}
+
+function SendAutoEmail(body){
+    if(body !== ""){
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            }
+        }
+        var q = "php/send_message.php?message=" + body;
+        xmlhttp.open("GET",q,false);
+        xmlhttp.send();
+    };
+    document.getElementById("emailBody").value = "";
+}
+
+/* =================================================== *\
+SLIDER
+\* =================================================== */
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+	showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+	showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+	var i;
+	var x = document.getElementsByClassName("mySlides");
+	var dots = document.getElementsByClassName("demo");
+	if (n > x.length) {slideIndex = 1}
+	if (n < 1) {slideIndex = x.length}
+	for (i = 0; i < x.length; i++) {
+		x[i].style.display = "none";
+	}
+	for (i = 0; i < dots.length; i++) {
+		dots[i].className = dots[i].className.replace(" w3-blue", "");
+	}
+	x[slideIndex-1].style.display = "block";
+	dots[slideIndex-1].className += " w3-blue";
+}
+
+</script>
+
+</html>
